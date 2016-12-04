@@ -9,8 +9,6 @@ class SplitWords
     
   def perform
     split_words
-
-    spliteable_words
   end
 
   private
@@ -20,7 +18,7 @@ class SplitWords
   end
 
   def split_words
-    good_sized_words.each do |word|
+    good_sized_words.each_with_object({}) do |word, spliteable_words|
       result = split_in_two(word)
       spliteable_words[word] = result unless result.empty?
     end
@@ -44,9 +42,5 @@ class SplitWords
       !dictionary[second_word.length].nil? &&
       !dictionary[first_word.length].bsearch{ |word| first_word <=> word }.nil? &&
       !dictionary[second_word.length].bsearch{ |word| second_word <=> word }.nil?
-  end
-
-  def spliteable_words
-    @spliteable_words ||= {}
   end
 end
